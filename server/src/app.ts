@@ -1,8 +1,14 @@
-import express, { Request, Response, NextFunction } from 'express';
-import createError = require('http-errors');
-import cookieParser = require('cookie-parser');
-import logger = require('morgan');
-import WeatherController from './controllers/weather.controller';
+import express, { Request, Response, NextFunction } from "express";
+import createError = require("http-errors");
+import cookieParser = require("cookie-parser");
+import logger = require("morgan");
+import dotenv from "dotenv";
+import WeatherController from "./controllers/weather.controller";
+
+const env = dotenv.config();
+if (env.error) {
+  throw env.error;
+}
 
 const app = express();
 const port = 8080;
@@ -10,13 +16,12 @@ const port = 8080;
 const weatherController = new WeatherController();
 const forecast = weatherController.makeForecastHandler();
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.set('view engine', 'html');
 
-app.get('/api/forecast', forecast.get);
+app.get("/api/forecast", forecast.get);
 
 // catch 404 and forward to error handler
 app.use(function (req: Request, res: Response, next: NextFunction) {
@@ -27,7 +32,7 @@ app.use(function (req: Request, res: Response, next: NextFunction) {
 app.use(function (err: any, req: Request, res: Response, next: NextFunction) {
   // set locals, only providing error in development
   res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+  res.locals.error = req.app.get("env") === "development" ? err : {};
 
   res.status(err.status || 500);
   res.json({
