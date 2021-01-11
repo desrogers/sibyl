@@ -6,7 +6,7 @@ import {
   Redirect,
 } from "react-router-dom";
 import Details from "./Details";
-import LandingPage from "./LandingPage";
+import Forecast from "./Forecast";
 
 function App() {
   return (
@@ -16,7 +16,7 @@ function App() {
           <Redirect to="/forecast/40.7127,-74.0059" />
         </Route>
         <Route exact path="/forecast/:location">
-          <LandingPage />
+          <Forecast />
         </Route>
         <Route exact path="/details/:location">
           <Details />

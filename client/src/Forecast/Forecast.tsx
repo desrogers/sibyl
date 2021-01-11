@@ -6,7 +6,7 @@ import DailyForecastTable from "./DailyForecastTable";
 import PageContentContainerGrid from "../shared/PageContentContainerGrid";
 import Form from "./Form";
 
-export default function LandingPage() {
+export default function Forecast() {
   return (
     <Page>
       <Hero />
