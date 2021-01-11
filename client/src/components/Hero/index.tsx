@@ -25,6 +25,7 @@ const useStyles = makeStyles({
   },
   attribution: {
     paddingLeft: "1em",
+    visibility: "hidden",
   },
 });
 
