@@ -4,7 +4,7 @@ import { Box, Container, Grid, Link } from "@material-ui/core";
 
 const StyledBox = withStyles({
   root: {
-    position: "fixed",
+    position: "absolute",
     width: "100%",
   },
 })(Box);
