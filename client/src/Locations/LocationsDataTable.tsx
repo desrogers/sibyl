@@ -4,12 +4,14 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Grid,
+  Box,
   Typography,
   makeStyles,
   IconButton,
+  Link,
 } from "@material-ui/core";
 import { DeleteOutline } from "mdi-material-ui";
+import { Link as RouterLink } from "react-router-dom";
 import React from "react";
 
 type Props = {
@@ -33,21 +35,16 @@ export default function LocationDataTable({ children }: Props) {
         <TableBody>
           <TableRow>
             <TableCell>
-              <Grid
-                container
-                item
-                direction="column"
-                className={classes.locationCell}
+              <Link
+                component={RouterLink}
+                to="/forecast/40.7127,-74.0059"
+                underline="none"
+                color="inherit"
               >
-                <Typography>Canberra</Typography>
-                <Typography>42°</Typography>
-              </Grid>
-            </TableCell>
-            <TableCell align="right">
-              <Typography>40</Typography>
-            </TableCell>
-            <TableCell align="right">
-              <Typography>53</Typography>
+                <Box className={classes.locationCell}>
+                  <Typography>Pearland</Typography>
+                </Box>
+              </Link>
             </TableCell>
             {children}
             <TableCell align="right" className={classes.buttonCell}>
