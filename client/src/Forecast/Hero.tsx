@@ -5,7 +5,7 @@ import heroImage from "./tim-mossholder-ULtV4JMRKaQ-unsplash.jpg";
 
 const useStyles = makeStyles({
   hero: {
-    height: 410,
+    height: 329,
     display: "block",
     "&:before": {
       backgroundColor: "blue",
@@ -14,13 +14,13 @@ const useStyles = makeStyles({
       backgroundRepeat: "no-repeat",
       content: "''",
       display: "block",
-      position: "relative",
+      position: "absolute",
       top: 0,
       left: 0,
       width: "100%",
-      height: "100%",
+      height: 460,
       zIndex: -2,
-      opacity: 0.6,
+      opacity: 0.3,
     },
   },
   attribution: {
