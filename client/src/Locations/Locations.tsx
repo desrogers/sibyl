@@ -2,7 +2,7 @@ import { Grid, makeStyles, Typography } from "@material-ui/core";
 import React from "react";
 import Header from "../shared/Header";
 import PageContentContainerGrid from "../shared/PageContentContainerGrid";
-import PageTemplateWithSpacer from "../shared/PageTemplateWithSpacer";
+import PageTemplate from "../shared/PageTemplate";
 import LocationsDataTable from "./LocationsDataTable";
 import RecentSearchessDataTable from "./RecentSearchesDataTable";
 
@@ -16,7 +16,7 @@ export default function Locations() {
   const classes = useStyles();
 
   return (
-    <PageTemplateWithSpacer>
+    <PageTemplate>
       <Header>Locations</Header>
       <PageContentContainerGrid>
         <Grid item>
@@ -43,6 +43,6 @@ export default function Locations() {
           <RecentSearchessDataTable />
         </Grid>
       </PageContentContainerGrid>
-    </PageTemplateWithSpacer>
+    </PageTemplate>
   );
 }
