@@ -35,7 +35,7 @@ export default function DailyForecastTable() {
     <TableContainer component={Paper}>
       <Table className={classes.table} aria-label="daily forecast table">
         <TableBody>
-          <TableRow hover>
+          <TableRow>
             <TableCell>{"01/03"}</TableCell>
             <TableCell>{"59°/37°"}</TableCell>
             <TableCell>

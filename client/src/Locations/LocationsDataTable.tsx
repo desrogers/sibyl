@@ -33,7 +33,7 @@ export default function LocationDataTable({ children }: Props) {
     <TableContainer>
       <Table>
         <TableBody>
-          <TableRow hover>
+          <TableRow>
             <TableCell>
               <Link
                 component={RouterLink}
