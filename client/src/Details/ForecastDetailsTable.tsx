@@ -21,6 +21,7 @@ import {
   Eye,
   Water,
   ArrowCollapseAll,
+  UmbrellaOutline,
 } from "mdi-material-ui/";
 import React from "react";
 import { orange } from "@material-ui/core/colors";
@@ -87,6 +88,15 @@ export default function ForecastDetailsTable() {
                 <TableRow>
                   <TableCell component="th" scope="row">
                     <Box className={classes.rowHeader}>
+                      <UmbrellaOutline className={classes.icon} />
+                      {"Precip Probability"}
+                    </Box>
+                  </TableCell>
+                  <TableCell align="right">{"80%"}</TableCell>
+                </TableRow>
+                <TableRow>
+                  <TableCell component="th" scope="row">
+                    <Box className={classes.rowHeader}>
                       <WaterOutline className={classes.icon} />
                       {"Humidity"}
                     </Box>
@@ -100,7 +110,7 @@ export default function ForecastDetailsTable() {
                       {"Pressure"}
                     </Box>
                   </TableCell>
-                  <TableCell align="right">{"30.07in"}</TableCell>
+                  <TableCell align="right">{"30.07 in"}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
@@ -127,7 +137,7 @@ export default function ForecastDetailsTable() {
                       {"UV Index"}
                     </Box>
                   </TableCell>
-                  <TableCell align="right">{"3 of 10"}</TableCell>
+                  <TableCell align="right">{"3"}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
