@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 import Details from "./Details";
 import Forecast from "./Forecast";
+import Locations from "./Locations/Locations";
 
 function App() {
   return (
@@ -15,7 +16,7 @@ function App() {
         <Route exact path="/">
           <Redirect to="/forecast/40.7127,-74.0059" />
         </Route>
-        <Route exact path={["/forecast/:location"]}>
+        <Route exact path="/forecast/:location">
           <Forecast />
         </Route>
         <Route
@@ -28,6 +29,9 @@ function App() {
         ></Route>
         <Route path="/details/:location/:date">
           <Details />
+        </Route>
+        <Route exact path="/locations">
+          <Locations />
         </Route>
       </Switch>
     </Router>
