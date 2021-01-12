@@ -1,6 +1,6 @@
 import React from "react";
 import { CssBaseline } from "@material-ui/core";
-import NavBar from "../NavBar";
+import NavBar from "./NavBar";
 
 interface Props {
   children: React.ReactNode;
