@@ -3,6 +3,7 @@ import createError = require("http-errors");
 import cookieParser = require("cookie-parser");
 import logger = require("morgan");
 import dotenv from "dotenv";
+import cors from "cors";
 import WeatherController from "./controllers/weather.controller";
 
 const env = dotenv.config();
@@ -16,6 +17,7 @@ const port = 8080;
 const weatherController = new WeatherController();
 const forecast = weatherController.makeForecastHandler();
 
+app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
