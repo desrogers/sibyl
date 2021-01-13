@@ -1,6 +1,7 @@
-# 🌞  sibyl
+# 🌞 sibyl
 
 **sibyl** is a full stack weather app built with Typescript. It provides current weather conditions and forecast details based on location, and offers a feature for users to view and save their recent searches.
+![Forecast page view screenshot](https://gdurl.com/Qshz)
 
 ## Table of Contents
 

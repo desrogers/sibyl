@@ -14,8 +14,7 @@
 
   ```
   LOCATIONS
-  id: int
-  locality: string
+  address: string
   lat: string
   lng: string
   ```
@@ -28,16 +27,16 @@
 
   ### [Mockups](https://balsamiq.cloud/s2zagq3/pbit2b1)
 
-  ![Forecast page view screenshot]()
+  ![Forecast page view screenshot](https://gdurl.com/Qshz)
   This is the landing page for the app, but a user can also navigate to it by either adding coordinates to the url without a date, e.g. `/forecast/40.7127,-74.0059`, or removing a date from the details url, e.g. `/details/40.7127,-74.0059`.
 
-  ![Details page view screenshot]()
+  ![Details page view screenshot](https://gdurl.com/Ci12)
 
-  On this page the user can go forward and back in time to get the forecast details for the chosen date. The typical user flow to here can start from the Current Weather Card or via the "More Details" button available in the collapsible table rows on the Forecast page view. This page can also be accessed directly through inputing the coordinates for a location and a date in the browser url.
+  On this page a user can go forward and back in time to get the forecast details for the chosen date. The typical user flow could begin with the Current Weather Card or the "More Details" button available in the collapsible table rows on the Forecast page view. This page can also be accessed directly through inputting the coordinates for a location and date in the browser url.
 
-  ![Locations page view screenshot]()
+  ![Locations page view screenshot](https://gdurl.com/ScU0)
 
-  After weighing the overhead for implementing a DBMS like MySQL or Postgres on the backend to save user preferences, and the simplicity of the Location data model, I decided to persist data to local storage instead. Also from a user experience standpoint, if I were to deploy the app in its current form, users would be able to keep their preferences without the need for authentication to ensure that their data is their data. But under different circumstances I think it would be a better user experience to use a DBMS and authentication so that the app is device or browser agnostic
+  After weighing the overhead for implementing a DBMS like MySQL or Postgres on the backend to save user preferences, and the simplicity of the Location model, I decided to persist data to local storage instead. Also from a user experience standpoint, if I were to deploy the app in its current form, users would be able to keep their preferences without the need for authentication to ensure that their data is their data. But under different circumstances I think it would be a better user experience to use a DBMS and authentication so that the app is device or browser agnostic
 
 ## Project Requirements
 
@@ -55,7 +54,7 @@ Please list examples of how your project meets the following requirements below:
 
 - [x] The usage of a specified architectural pattern (MVC, MVP, MVVM, etc.)
 
-  The project uses an MVC pattern at a high level employing React for the View, NodeJS for the Controller, and interacts with an external API for the Model data. There's also a separate MVC implemented on the front end utilizing the browser local storage as the Model in the architecture to allow users to interact with recent searches and stored locations without the need for a full blown DBMS on the backend
+  The project uses an MVC pattern at a high level employing React for the View, NodeJS for the Controller, and interacts with an external API for the Model data.
 
 - [x] Use of a [REST API](https://medium.com/@arteko/the-best-way-to-use-rest-apis-in-swift-95e10696c980).
 
