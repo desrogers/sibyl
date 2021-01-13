@@ -6,6 +6,9 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import useOnClickOutside from "react-cool-onclickoutside";
 import { geolocated, GeolocatedProps } from "react-geolocated";
+import ForecastAPI from "./ForecastAPI";
+
+const API = new ForecastAPI();
 
 function FormController(props: GeolocatedProps) {
   const geolocatedRef = useRef<any>(null);
@@ -37,9 +40,8 @@ function FormController(props: GeolocatedProps) {
     // Get latitude and longitude via utility functions
     getGeocode({ address: description })
       .then((results) => getLatLng(results[0]))
-      .then(({ lat, lng }) => {
-        console.log("📍 Coordinates: ", { lat, lng });
-      })
+      .then(({ lat, lng }) => API.getForecast({ lat, lng }))
+      .then((response) => console.log("Here's your current forecast", response))
       .catch((error) => {
         console.log("😱 Error: ", error);
       });
