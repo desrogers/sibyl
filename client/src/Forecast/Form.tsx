@@ -106,8 +106,8 @@ export default function Form({
                   />
                   <IconButton
                     className={classes.iconButton}
-                    type="submit"
                     aria-label="search"
+                    onClick={handleSelect({ description: searchInputValue })}
                   >
                     <Search />
                   </IconButton>
