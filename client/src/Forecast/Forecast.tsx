@@ -4,13 +4,14 @@ import Hero from "./Hero";
 import CurrentWeatherCard from "./CurrentWeatherCard";
 import DailyForecastTable from "./DailyForecastTable";
 import PageContentContainerGrid from "../shared/PageContentContainerGrid";
-import Form from "./Form";
+import FormController from "./FormController";
 
 export default function Forecast() {
   return (
     <Page>
-      <Hero />
-      <Form />
+      <Hero>
+        <FormController />
+      </Hero>
       <PageContentContainerGrid>
         <CurrentWeatherCard />
         <DailyForecastTable />

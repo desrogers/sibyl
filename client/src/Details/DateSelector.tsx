@@ -28,7 +28,7 @@ export default function DateSelector() {
           </IconButton>
         </Grid>
         <Grid item>
-          <Header>Jan 10, 2021</Header>
+          <Header>Jan 13, 2021</Header>
         </Grid>
         <Grid item>
           <IconButton>
