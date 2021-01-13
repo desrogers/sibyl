@@ -1,6 +1,5 @@
 import {
   IconButton,
-  Container,
   Grid,
   Paper,
   styled,
@@ -12,10 +11,13 @@ import {
 } from "@material-ui/core";
 import { MyLocationTwoTone, Search } from "@material-ui/icons";
 import React, { ChangeEvent } from "react";
+import { GeolocatedProps } from "react-geolocated";
 import PlaceSuggestionsList from "./PlaceSuggestionsList";
 
 export type FormProps = {
   suggestions: any;
+  getLocation: () => void;
+  geolocatedRef: any;
   handleInput: (
     event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => void;
@@ -35,9 +37,9 @@ const StyledForm = withStyles({
   },
 })(Paper);
 
-const FormContainer = styled(Container)({
-  position: "absolute",
-  top: 150,
+const FormContainer = styled(Box)({
+  position: "relative",
+  top: -200,
 });
 
 const useStyles = makeStyles({
@@ -62,12 +64,13 @@ const useStyles = makeStyles({
 
 export default function Form({
   suggestions,
+  getLocation,
   handleInput,
   handleSelect,
   searchInputRef,
   searchInputValue,
   ready,
-}: FormProps) {
+}: FormProps & GeolocatedProps) {
   const classes = useStyles();
   return (
     <FormContainer>
@@ -88,6 +91,7 @@ export default function Form({
                   <IconButton
                     className={classes.iconButton}
                     aria-label="my location"
+                    onClick={getLocation}
                   >
                     <MyLocationTwoTone />
                   </IconButton>

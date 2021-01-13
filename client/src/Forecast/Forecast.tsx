@@ -10,8 +10,8 @@ export default function Forecast() {
   return (
     <Page>
       <Hero />
-      <FormController />
       <PageContentContainerGrid>
+        <FormController />
         <CurrentWeatherCard />
         <DailyForecastTable />
       </PageContentContainerGrid>

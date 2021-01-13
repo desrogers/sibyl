@@ -23,7 +23,7 @@ export default function PlaceSuggestionsList({
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <List dense>
+      <List dense disablePadding>
         {status === "OK" &&
           data.slice(0, 4).map((suggestion: any) => {
             const {
