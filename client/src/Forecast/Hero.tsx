@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import { Box, Link, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import heroImage from "./tim-mossholder-ULtV4JMRKaQ-unsplash.jpg";
@@ -29,7 +29,7 @@ const useStyles = makeStyles({
   },
 });
 
-export default function Hero() {
+export default function Hero({ children }: { children: ReactNode }) {
   const classes = useStyles();
   return (
     <>
@@ -53,6 +53,7 @@ export default function Hero() {
             Unsplash
           </Link>
         </Typography>
+        {children}
       </Box>
     </>
   );

@@ -38,8 +38,7 @@ const StyledForm = withStyles({
 })(Paper);
 
 const FormContainer = styled(Box)({
-  position: "relative",
-  top: -200,
+  marginTop: 80,
 });
 
 const useStyles = makeStyles({

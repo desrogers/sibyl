@@ -9,9 +9,10 @@ import FormController from "./FormController";
 export default function Forecast() {
   return (
     <Page>
-      <Hero />
-      <PageContentContainerGrid>
+      <Hero>
         <FormController />
+      </Hero>
+      <PageContentContainerGrid>
         <CurrentWeatherCard />
         <DailyForecastTable />
       </PageContentContainerGrid>
