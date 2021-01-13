@@ -1,5 +1,4 @@
 import * as got from "got";
-import pick from "lodash/pick";
 
 interface Forecast {
   latitude: number;
@@ -20,31 +19,18 @@ interface Coordinates {
 
 export default class WeatherService {
   private _credentials = {
-    host: "dark-sky.p.rapidapi.com",
-    key: process.env.DARKSKY_KEY,
+    key: process.env.WEATHER_API_KEY,
   };
 
   async getForecast({ lat, lng }: Coordinates): Promise<Pick<any, string>> {
-    const { host, key } = this._credentials;
+    const { key } = this._credentials;
     if (key === undefined) {
       throw new Error("Weather API key is undefined. Add your key to .env");
     }
-    const options = {
-      headers: {
-        "x-rapidapi-key": key,
-        "x-rapidapi-host": host,
-      },
-      responseType: "json",
-    };
-    const fields: string[] = [
-      "latitude",
-      "longitude",
-      "currently",
-      "hourly",
-      "daily",
-    ];
-    const { body } = await got.get(`https://${host}/${lat},${lng}`, options);
+
+    const URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,hourly&appid=${key}`;
+    const { body } = await got.get(URL);
     const forecast: Forecast = JSON.parse(body);
-    return pick(forecast, fields);
+    return forecast;
   }
 }
