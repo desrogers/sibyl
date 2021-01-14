@@ -2,15 +2,11 @@ import * as got from "got";
 import queryString from "query-string";
 
 interface Forecast {
-  latitude: number;
-  longitude: number;
-  timezone?: string;
-  currently: Record<string, number>;
-  minutely?: Record<string, number>;
-  hourly: Record<string, number>;
+  lat: number;
+  lon: number;
+  current: Record<string, number>;
   daily: Record<string, number>;
-  flags?: Record<string, number>;
-  offset?: number;
+  alerts?: Record<string, number>;
 }
 
 interface Coordinates {
@@ -35,10 +31,7 @@ export default class WeatherService {
     };
   }
 
-  async getForecast({
-    lat,
-    lng: lon,
-  }: Coordinates): Promise<Pick<any, string>> {
+  async getForecast({ lat, lng: lon }: Coordinates): Promise<Forecast> {
     if (this._config.appid === undefined) {
       throw new Error("Weather API key is undefined. Add your key to .env");
     }
