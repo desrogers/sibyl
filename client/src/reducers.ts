@@ -4,17 +4,35 @@
 import { ForecastObject } from "ForecastTypes";
 import { LocationObject } from "LocationTypes";
 
-export type Action =
-  | { type: "ADD"; payload: LocationObject }
-  | { type: "DELETE"; payload: LocationObject };
+export type LocationAction =
+  | { type: "ADD_LOCATION"; payload: LocationObject }
+  | { type: "DELETE_LOCATION"; payload: LocationObject };
 
-export const weatherReducer = (state: ForecastObject) => state;
+export type SearchAction =
+  | { type: "ADD_SEARCH"; payload: LocationObject }
+  | { type: "DELETE_SEARCH"; payload: LocationObject };
 
-export const locationReducer = (state: LocationObject[], action: Action) => {
+export type WeatherAction = { type: "UPDATE_WEATHER"; payload: ForecastObject };
+export const weatherReducer = (
+  state: ForecastObject,
+  action: WeatherAction | LocationAction | SearchAction
+) => {
   switch (action.type) {
-    case "ADD":
+    case "UPDATE_WEATHER":
+      return action.payload;
+    default:
+      return state;
+  }
+};
+
+export const locationReducer = (
+  state: LocationObject[],
+  action: WeatherAction | LocationAction | SearchAction
+) => {
+  switch (action.type) {
+    case "ADD_LOCATION":
       return [...state, action.payload];
-    case "DELETE":
+    case "DELETE_LOCATION":
       return [
         ...state.filter(
           (location) => location.address !== action.payload.address
@@ -24,11 +42,14 @@ export const locationReducer = (state: LocationObject[], action: Action) => {
       return state;
   }
 };
-export const searchReducer = (state: LocationObject[], action: Action) => {
+export const searchReducer = (
+  state: LocationObject[],
+  action: WeatherAction | LocationAction | SearchAction
+) => {
   switch (action.type) {
-    case "ADD":
-      return [...state, action.payload];
-    case "DELETE":
+    case "ADD_SEARCH":
+      return [action.payload, ...state];
+    case "DELETE_SEARCH":
       return [
         ...state.filter(
           (location) => location.address !== action.payload.address

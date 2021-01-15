@@ -8,7 +8,9 @@ import {
   weatherReducer,
   locationReducer,
   searchReducer,
-  Action,
+  WeatherAction,
+  LocationAction,
+  SearchAction,
 } from "./reducers";
 
 type State = {
@@ -35,9 +37,9 @@ const AppContext = createContext<Store>({
 
 const mainReducer = (
   { forecast, locations, searches }: State,
-  action: Action
+  action: WeatherAction | LocationAction | SearchAction
 ): State => ({
-  forecast: weatherReducer(forecast),
+  forecast: weatherReducer(forecast, action),
   locations: locationReducer(locations, action),
   searches: searchReducer(searches, action),
 });

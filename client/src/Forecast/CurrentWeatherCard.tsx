@@ -9,12 +9,13 @@ import {
 import { WeatherIcon } from "weather-react-icons";
 import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@material-ui/core";
-import React from "react";
+import React, { useContext } from "react";
+import { AppContext } from "../context";
 
 const useStyles = makeStyles({
   root: {
     position: "relative",
-    height: 200,
+    height: 188,
     marginBottom: 60,
   },
   block: {
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
     fontWeight: 600,
   },
   locality: {
-    fontSize: "2rem",
+    fontSize: "1.5rem",
   },
   subtext: {
     fontSize: "1.3rem",
@@ -36,15 +37,36 @@ const useStyles = makeStyles({
   },
 });
 
+const getDetailsPathString = ({
+  lat,
+  lng,
+}: {
+  lat: number;
+  lng: number;
+}): string => {
+  const now = new Date();
+  const date = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+
+  return `/details/${lat},${lng}/${date}`;
+};
+
 export default function CurrentWeatherCard() {
   const classes = useStyles();
+  const { state } = useContext(AppContext);
+  const {
+    forecast: { current: { temp = 0, feels_like = 0, weather = [] } = {} } = {},
+    searches: [latest],
+  } = state;
+  const path =
+    latest && getDetailsPathString({ lat: latest?.lat, lng: latest?.lng });
+
   return (
     <Card raised className={classes.root}>
       <CardContent>
         <Box className={classes.block}>
           <Link
             component={RouterLink}
-            to="/details/40.7127,-74.0059/2021-01-10"
+            to={path || "/"}
             underline="none"
             color="inherit"
           >
@@ -65,15 +87,21 @@ export default function CurrentWeatherCard() {
                 >
                   <Grid item>
                     <Typography className={classes.locality}>
-                      Pearland, TX
+                      {latest
+                        ? latest.address.split(",").slice(-3, -1).join(",")
+                        : null}
                     </Typography>
                   </Grid>
                   <Grid item>
-                    <Typography className={classes.tempLarge}>42°</Typography>
+                    <Typography className={classes.tempLarge}>
+                      {temp ? `${Math.floor(temp)}°` : null}
+                    </Typography>
                   </Grid>
                   <Grid item>
                     <Typography className={classes.subtext}>
-                      Feels like 32°
+                      {feels_like
+                        ? `Feels like ${Math.floor(feels_like)}°`
+                        : ""}
                     </Typography>
                   </Grid>
                 </Grid>
@@ -85,11 +113,13 @@ export default function CurrentWeatherCard() {
                   alignContent="center"
                 >
                   <Grid item>
-                    <WeatherIcon
-                      iconId={200}
-                      name="owm"
-                      className={classes.icon}
-                    />
+                    {weather.length ? (
+                      <WeatherIcon
+                        iconId={weather[0].id}
+                        name="owm"
+                        className={classes.icon}
+                      />
+                    ) : null}
                   </Grid>
                 </Grid>
               </Grid>
