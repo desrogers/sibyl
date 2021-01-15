@@ -3,7 +3,7 @@
 
 import { LocationObject } from "LocationTypes";
 import { ForecastObject } from "ForecastTypes";
-import React, { ChangeEvent, useContext, useRef } from "react";
+import React, { ChangeEvent, useContext, useEffect, useRef } from "react";
 import Form from "./Form";
 import usePlacesAutocomplete, {
   getGeocode,
@@ -70,25 +70,24 @@ function FormController(props: GeolocatedProps) {
 
   const getLocation = () => {
     // TODO: enable proper reverse geocoding
-    // if (!props.isGeolocationAvailable || !props.isGeolocationEnabled) return;
 
-    // if (geolocatedRef.current) geolocatedRef.current.getLocation();
+    if (props.positionError) {
+      console.error(props.positionError);
+      return;
+    }
+    if (!props.isGeolocationAvailable || !props.isGeolocationEnabled) return;
+    if (geolocatedRef.current) geolocatedRef.current.getLocation();
 
-    // if (
-    //   typeof props.coords?.latitude !== "number" ||
-    //   typeof props.coords?.longitude !== "number"
-    // ) {
-    //   return;
-    // }
-
-    // const location = {
-    //   lat: props.coords?.latitude,
-    //   lng: props.coords?.longitude,
-    // };
+    if (
+      typeof props.coords?.latitude !== "number" ||
+      typeof props.coords?.longitude !== "number"
+    ) {
+      return;
+    }
 
     const location = {
-      lat: 37.7910114,
-      lng: -122.4033693,
+      lat: props.coords?.latitude,
+      lng: props.coords?.longitude,
     };
 
     Promise.all([getGeocode({ location }), API.getForecast(location)])
@@ -96,11 +95,8 @@ function FormController(props: GeolocatedProps) {
         const geocoderResults: google.maps.GeocoderResult[] = results[0];
         const forecastResults: ForecastObject[] = results[1];
         const address: string = geocoderResults[0].formatted_address;
-        const locationObj: LocationObject = {
-          address,
-          lat: location.lat,
-          lng: location.lng,
-        };
+        const locationObj: LocationObject = { address, ...location };
+
         setValue(address, false);
         dispatch({ type: "ADD_SEARCH", payload: locationObj });
         dispatch({ type: "UPDATE_WEATHER", payload: forecastResults });
@@ -109,6 +105,11 @@ function FormController(props: GeolocatedProps) {
         console.log("😱 Error: ", error);
       });
   };
+
+  useEffect(() => {
+    getLocation();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.coords]);
 
   return (
     <Form
@@ -124,4 +125,8 @@ function FormController(props: GeolocatedProps) {
   );
 }
 
-export default geolocated()(FormController);
+export default geolocated({
+  positionOptions: {
+    enableHighAccuracy: true,
+  },
+})(FormController);

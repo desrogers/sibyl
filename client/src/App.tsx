@@ -16,9 +16,9 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Redirect to="/forecast/40.7127,-74.0059" />
+            <Redirect to="/forecast" />
           </Route>
-          <Route path="/forecast/:location">
+          <Route path="/forecast">
             <Forecast />
           </Route>
           <Route
