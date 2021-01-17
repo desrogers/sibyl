@@ -11,7 +11,7 @@ import usePlacesAutocomplete, {
 } from "use-places-autocomplete";
 import useOnClickOutside from "react-cool-onclickoutside";
 import { geolocated, GeolocatedProps } from "react-geolocated";
-import ForecastAPI from "./ForecastAPI";
+import ForecastAPI from "../api";
 import { AppContext } from "../context";
 
 const API = new ForecastAPI();
@@ -59,7 +59,6 @@ function FormController(props: GeolocatedProps) {
         return API.getForecast({ lat, lng });
       })
       .then((response) => {
-        console.log({ location });
         dispatch({ type: "ADD_SEARCH", payload: location });
         dispatch({ type: "UPDATE_WEATHER", payload: response });
       })
