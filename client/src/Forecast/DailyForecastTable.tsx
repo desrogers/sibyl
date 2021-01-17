@@ -75,7 +75,7 @@ export default function DailyForecastTable() {
             );
 
             return (
-              <>
+              <React.Fragment key={idx}>
                 <TableRow>
                   <TableCell>{date.relative}</TableCell>
                   <TableCell>{temp}</TableCell>
@@ -129,7 +129,7 @@ export default function DailyForecastTable() {
                     </Collapse>
                   </TableCell>
                 </TableRow>
-              </>
+              </React.Fragment>
             );
           })}
         </TableBody>
