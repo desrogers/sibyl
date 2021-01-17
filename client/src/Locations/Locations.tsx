@@ -8,7 +8,9 @@ import RecentSearchessDataTable from "./RecentSearchesDataTable";
 
 const useStyles = makeStyles({
   tableHeading: {
+    textAlign: "left",
     margin: "2.6em 0 0.8em",
+    color: "grey",
   },
 });
 
@@ -28,7 +30,6 @@ export default function Locations() {
           >
             Saved
           </Typography>
-          {/* TODO: If no saved Locations don't render table */}
           <LocationsDataTable />
         </Grid>
         <Grid item>
