@@ -25,6 +25,11 @@ import {
 } from "mdi-material-ui/";
 import React from "react";
 import { orange } from "@material-ui/core/colors";
+import { Daily } from "ForecastTypes";
+
+type Props = {
+  data: Daily;
+};
 
 const useStyles = makeStyles({
   rowHeader: {
@@ -51,7 +56,7 @@ const sunStyles = {
 const StyledWeatherSunsetUp = withStyles(sunStyles)(WeatherSunsetUp);
 const StyledWeatherSunsetDown = withStyles(sunStyles)(WeatherSunsetDown);
 
-export default function ForecastDetailsTable() {
+export default function ForecastDetailsTable({ data }: Props) {
   const classes = useStyles();
 
   return (
