@@ -11,6 +11,7 @@ import { Link as RouterLink } from "react-router-dom";
 import { Link } from "@material-ui/core";
 import React, { useContext } from "react";
 import { AppContext } from "../context";
+import { format } from "date-fns";
 
 const useStyles = makeStyles({
   root: {
@@ -44,8 +45,7 @@ const getDetailsPathString = ({
   lat: number;
   lng: number;
 }): string => {
-  const now = new Date();
-  const date = `${now.getFullYear()}-${now.getMonth()}-${now.getDate()}`;
+  const date = format(new Date(), "yyyy-MM-dd");
 
   return `/details/${lat},${lng}/${date}`;
 };
