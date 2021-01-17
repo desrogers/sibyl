@@ -1,10 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import {
   addDays,
   differenceInDays,
   format,
   isAfter,
+  isToday,
   isYesterday,
   parse,
   subDays,
@@ -31,8 +32,9 @@ const generatePrevNextDates = (fromDate: string) => {
 
 function findForecast(current: string, arr: Daily[]) {
   const date = parse(current, "yyyy-MM-dd", new Date());
-  const idx = differenceInDays(new Date(), date);
-  return arr[idx] || [];
+  const idx = isToday(date) ? 0 : differenceInDays(date, new Date()) + 1;
+  console.log("fore", idx);
+  return arr[idx];
 }
 
 export default function Details() {
@@ -44,12 +46,17 @@ export default function Details() {
   const { pathname } = useLocation();
   const [, , latlng, date] = pathname.split("/");
   const dates = generatePrevNextDates(date);
-  const data = findForecast(date, daily);
+  const [data, setData] = useState({} as Daily);
+  useEffect(() => {
+    const forecast = findForecast(date, daily);
+    setData(forecast);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [pathname]);
   return (
     <PageTemplate>
       <PageContentContainerGrid>
         <DateSelector dates={dates} latlng={latlng} />
-        <ForecastDetailsTable data={data} />
+        {data.dt && <ForecastDetailsTable data={data} />}
       </PageContentContainerGrid>
     </PageTemplate>
   );

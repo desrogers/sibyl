@@ -18,7 +18,6 @@ import {
   WeatherSunny,
   WeatherSunsetUp,
   WeatherSunsetDown,
-  Eye,
   Water,
   ArrowCollapseAll,
   UmbrellaOutline,
@@ -26,6 +25,7 @@ import {
 import React from "react";
 import { orange } from "@material-ui/core/colors";
 import { Daily } from "ForecastTypes";
+import { format } from "date-fns";
 
 type Props = {
   data: Daily;
@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 
 const sunStyles = {
   root: {
-    color: orange[300],
+    color: orange[500],
     height: "1.2em",
     width: "auto",
     marginRight: "15px",
@@ -56,8 +56,36 @@ const sunStyles = {
 const StyledWeatherSunsetUp = withStyles(sunStyles)(WeatherSunsetUp);
 const StyledWeatherSunsetDown = withStyles(sunStyles)(WeatherSunsetDown);
 
+function fmt(data: Daily) {
+  const {
+    sunrise,
+    sunset,
+    temp,
+    humidity,
+    dew_point,
+    wind_speed,
+    pressure,
+    uvi,
+    pop,
+  } = data;
+  const fmtFloorToStr = (n: number, s: string = "") => `${Math.floor(n)}${s}`;
+
+  return {
+    sunrise: format(new Date(sunrise * 1000), "p"),
+    sunset: format(new Date(sunset * 1000), "p"),
+    temp: `${fmtFloorToStr(temp.max, "°")} / ${fmtFloorToStr(temp.min, "°")}`,
+    precipProb: fmtFloorToStr(pop, "%"),
+    humidity: fmtFloorToStr(humidity, "%"),
+    pressure: fmtFloorToStr(pressure, " hPa"),
+    windSpeed: fmtFloorToStr(wind_speed, " mph"),
+    dew: fmtFloorToStr(dew_point, "°"),
+    uvi: fmtFloorToStr(uvi),
+  };
+}
+
 export default function ForecastDetailsTable({ data }: Props) {
   const classes = useStyles();
+  const details = fmt(data);
 
   return (
     <Card>
@@ -67,13 +95,13 @@ export default function ForecastDetailsTable({ data }: Props) {
             <Grid item>
               <Box className={classes.rowHeader}>
                 <StyledWeatherSunsetUp />
-                <Typography variant="h6">{"7:34 am"}</Typography>
+                <Typography variant="h6">{details.sunrise}</Typography>
               </Box>
             </Grid>
             <Grid item>
               <Box className={classes.rowHeader}>
                 <StyledWeatherSunsetDown />
-                <Typography variant="h6">{"4:34 pm"}</Typography>
+                <Typography variant="h6">{details.sunset}</Typography>
               </Box>
             </Grid>
           </Grid>
@@ -88,7 +116,7 @@ export default function ForecastDetailsTable({ data }: Props) {
                       {"Hi / Lo"}
                     </Box>
                   </TableCell>
-                  <TableCell align="right">{"59° / 41°"}</TableCell>
+                  <TableCell align="right">{details.temp}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
@@ -97,7 +125,7 @@ export default function ForecastDetailsTable({ data }: Props) {
                       {"Precip Probability"}
                     </Box>
                   </TableCell>
-                  <TableCell align="right">{"80%"}</TableCell>
+                  <TableCell align="right">{details.precipProb}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
@@ -106,7 +134,7 @@ export default function ForecastDetailsTable({ data }: Props) {
                       {"Humidity"}
                     </Box>
                   </TableCell>
-                  <TableCell align="right">{"70%"}</TableCell>
+                  <TableCell align="right">{details.humidity}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
@@ -115,7 +143,7 @@ export default function ForecastDetailsTable({ data }: Props) {
                       {"Pressure"}
                     </Box>
                   </TableCell>
-                  <TableCell align="right">{"30.07 in"}</TableCell>
+                  <TableCell align="right">{details.pressure}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
@@ -124,7 +152,7 @@ export default function ForecastDetailsTable({ data }: Props) {
                       {"Wind Speed"}
                     </Box>
                   </TableCell>
-                  <TableCell align="right">{"15 mph"}</TableCell>
+                  <TableCell align="right">{details.windSpeed}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
@@ -133,7 +161,7 @@ export default function ForecastDetailsTable({ data }: Props) {
                       {"Dew Point"}
                     </Box>
                   </TableCell>
-                  <TableCell align="right">{"39°"}</TableCell>
+                  <TableCell align="right">{details.dew}</TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell component="th" scope="row">
@@ -142,16 +170,7 @@ export default function ForecastDetailsTable({ data }: Props) {
                       {"UV Index"}
                     </Box>
                   </TableCell>
-                  <TableCell align="right">{"3"}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell component="th" scope="row">
-                    <Box className={classes.rowHeader}>
-                      <Eye className={classes.icon} />
-                      {"Visibility"}
-                    </Box>
-                  </TableCell>
-                  <TableCell align="right">{"10 mi"}</TableCell>
+                  <TableCell align="right">{details.uvi}</TableCell>
                 </TableRow>
               </TableBody>
             </Table>
