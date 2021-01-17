@@ -8,7 +8,7 @@ import {
 import { AppProvider } from "./context";
 import Details from "./Details";
 import Forecast from "./Forecast";
-import Locations from "./Locations/Locations";
+import Locations from "./Locations/";
 
 function App() {
   return (

@@ -1,3 +1,3 @@
-import Locations from "./Locations";
+import LocationsController from "./LocationsController";
 
-export default Locations;
+export default LocationsController;
