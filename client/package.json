@@ -11,6 +11,8 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "axios": "^0.21.1",
+    "date-fns": "^2.16.1",
+    "degrees-to-direction": "^1.1.1",
     "http-proxy-middleware": "^0.19.1",
     "mdi-material-ui": "^6.21.0",
     "query-string": "^4.3.4",
