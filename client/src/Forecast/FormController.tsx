@@ -13,11 +13,16 @@ import useOnClickOutside from "react-cool-onclickoutside";
 import { geolocated, GeolocatedProps } from "react-geolocated";
 import ForecastAPI from "../api";
 import { AppContext } from "../context";
+import { useHistory, useLocation } from "react-router-dom";
+import { pathFinder } from "../utils";
+import { Coords } from "../api";
 
 const API = new ForecastAPI();
 
 function FormController(props: GeolocatedProps) {
   const { dispatch } = useContext(AppContext);
+  const { pathname } = useLocation();
+  const history = useHistory();
   const geolocatedRef = useRef<any>(null);
   const {
     ready,
@@ -68,26 +73,37 @@ function FormController(props: GeolocatedProps) {
   };
 
   const getLocation = () => {
-    // TODO: enable proper reverse geocoding
-
     if (props.positionError) {
       console.error(props.positionError);
-      return;
     }
     if (!props.isGeolocationAvailable || !props.isGeolocationEnabled) return;
     if (geolocatedRef.current) geolocatedRef.current.getLocation();
+    if (props.coords) {
+      const {
+        coords: { latitude, longitude },
+      } = props;
 
-    if (
-      typeof props.coords?.latitude !== "number" ||
-      typeof props.coords?.longitude !== "number"
-    ) {
+      history.push(`/forecast/${latitude},${longitude}`);
+    }
+  };
+
+  useEffect(() => {
+    let location: Coords;
+    const { coords } = props;
+    if (!pathname && !coords) return;
+
+    const path = pathFinder(pathname);
+    if (path) {
+      const { lat, lng } = path;
+      location = { lat, lng };
+    } else if (coords) {
+      location = {
+        lat: coords.latitude,
+        lng: coords.longitude,
+      };
+    } else {
       return;
     }
-
-    const location = {
-      lat: props.coords?.latitude,
-      lng: props.coords?.longitude,
-    };
 
     Promise.all([getGeocode({ location }), API.getForecast(location)])
       .then((results) => {
@@ -103,12 +119,8 @@ function FormController(props: GeolocatedProps) {
       .catch((error) => {
         console.log("😱 Error: ", error);
       });
-  };
-
-  useEffect(() => {
-    getLocation();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.coords]);
+  }, [props.coords, pathname]);
 
   return (
     <Form

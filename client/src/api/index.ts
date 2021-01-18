@@ -1,6 +1,6 @@
 import axios from "axios";
 
-type Coords = {
+export type Coords = {
   lat: number;
   lng: number;
 };
