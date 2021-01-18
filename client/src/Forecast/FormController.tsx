@@ -49,21 +49,12 @@ function FormController(props: GeolocatedProps) {
     setValue(description, false);
     clearSuggestions();
 
-    let location = {
-      address: description,
-      lat: 0,
-      lng: 0,
-    };
-
-    // Get latitude and longitude via utility functions
     getGeocode({ address: description })
       .then((results) => getLatLng(results[0]))
-      .then(({ lat, lng }) => {
-        location.lat = lat;
-        location.lng = lng;
-        return API.getForecast({ lat, lng });
-      })
+      .then(({ lat, lng }) => API.getForecast({ lat, lng }))
       .then((response) => {
+        const { lat, lon: lng } = response;
+        const location = { lat, lng, address: description };
         dispatch({ type: "ADD_SEARCH", payload: location });
         dispatch({ type: "UPDATE_WEATHER", payload: response });
       })
