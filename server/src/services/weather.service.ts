@@ -1,15 +1,12 @@
 import * as got from "got";
+import queryString from "query-string";
 
 interface Forecast {
-  latitude: number;
-  longitude: number;
-  timezone?: string;
-  currently: Record<string, number>;
-  minutely?: Record<string, number>;
-  hourly: Record<string, number>;
+  lat: number;
+  lon: number;
+  current: Record<string, number>;
   daily: Record<string, number>;
-  flags?: Record<string, number>;
-  offset?: number;
+  alerts?: Record<string, number>;
 }
 
 interface Coordinates {
@@ -17,18 +14,30 @@ interface Coordinates {
   lng: string;
 }
 
-export default class WeatherService {
-  private _credentials = {
-    key: process.env.WEATHER_API_KEY,
-  };
+type Config = {
+  appid: string;
+  units: string;
+  exclude: string[];
+};
 
-  async getForecast({ lat, lng }: Coordinates): Promise<Pick<any, string>> {
-    const { key } = this._credentials;
-    if (key === undefined) {
+export default class WeatherService {
+  private _config: Config;
+
+  constructor() {
+    this._config = {
+      appid: process.env.WEATHER_API_KEY || "",
+      units: "imperial",
+      exclude: ["minutely", "hourly", "timezone", "timezone_offset"],
+    };
+  }
+
+  async getForecast({ lat, lng: lon }: Coordinates): Promise<Forecast> {
+    if (this._config.appid === undefined) {
       throw new Error("Weather API key is undefined. Add your key to .env");
     }
-
-    const URL = `https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lng}&exclude=minutely,hourly&appid=${key}`;
+    const fields = { ...this._config, lat, lon };
+    const params = queryString.stringify(fields, { arrayFormat: "comma" });
+    const URL = `https://api.openweathermap.org/data/2.5/onecall?${params}`;
     const { body } = await got.get(URL);
     const forecast: Forecast = JSON.parse(body);
     return forecast;

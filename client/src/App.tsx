@@ -8,7 +8,7 @@ import {
 import { AppProvider } from "./context";
 import Details from "./Details";
 import Forecast from "./Forecast";
-import Locations from "./Locations/Locations";
+import Locations from "./Locations/";
 
 function App() {
   return (
@@ -16,9 +16,9 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/">
-            <Redirect to="/forecast/40.7127,-74.0059" />
+            <Redirect to="/forecast" />
           </Route>
-          <Route path="/forecast/:location">
+          <Route path="/forecast">
             <Forecast />
           </Route>
           <Route
